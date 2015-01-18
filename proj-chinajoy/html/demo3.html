@@ -1,0 +1,39 @@
+<html>
+<head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>demo3</title>
+    <style type="text/css">
+        #gua{
+            width: 270px;
+            height: 160px;
+        }
+        #gua div{line-height: 160px;text-align: center;font-size: 32px;font-weight: bold;color: #000;font-family: "microsoft yahei";}
+    </style>
+</head>
+<body>
+    <div id="gua"></div>
+    <script type="text/javascript" src="../js/zepto.min.js"></script>
+    <script src="../js/Lottery.js"></script>
+    <script type="text/javascript" src="../js/guesture.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+
+            var lottery = new Lottery('gua', '../img/p1-img-gua.jpg', 'image', 270, 160, function(percent){
+                console.log(percent);
+                if (percent >= 67) {
+                    //爆发小宇宙
+                    lottery.super();
+                    alert('你红啦！');
+                };
+            },80,70,110,40);
+            lottery.init('很遗憾', {type : 'text',color : '#3a195a'});
+        });
+    </script>
+</body>
+</html>

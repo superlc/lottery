@@ -1,0 +1,77 @@
+<html><head>
+    <meta charset="utf-8">
+    <meta name="format-detection" content="telephone=no">
+    <meta name="viewport" content="width=device-width, user-scalable=no">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black">
+    <title>demo1</title>
+    <style type="text/css">
+        #gua{
+            width: 270px;
+            height: 160px;
+        }
+        #bg{height: 160px;}
+        #gua{position: relative;}
+        .bg{position:absolute;left:0;top:0;width: 100%;height: 160px;line-height: 160px;text-align: center;color: red;font-weight: bold;color:red;font-family: "microsoft yahei";}
+        #gua canvas{position: relative;z-index: 2;}
+    </style>
+</head>
+<body>
+    <div id="gua">
+        <div class="bg">我在这儿</div>
+        <canvas id="canvas" width="270" height="160"></canvas>
+    </div>
+    <div class="ops">
+        <p><input type="radio" id="op1" name="op" checked="true"><label for="op1">destination-out</label>
+        </p>
+        <p><input type="radio" id="op2" name="op"><label for="op2">destination-atop</label>
+        </p>
+        <!--
+        <p><input type="radio" id="op3" name="op"><label for="op3">destination-in</label>
+        </p>
+        <p><input type="radio" id="op4" name="op"><label for="op4">destination-atop</label>
+        </p>
+        <p><input type="radio" id="op5" name="op"><label for="op5">lighter</label>
+        </p>
+        <p><input type="radio" id="op6" name="op"><label for="op6">darker</label>
+        </p>
+        <p><input type="radio" id="op7" name="op"><label for="op7">copy</label>
+        </p>
+        <p><input type="radio" id="op8" name="op"><label for="op8">xor</label>
+        </p>
+        -->
+        </div>
+    <script type="text/javascript" src="../js/zepto.min.js"></script>
+    <script type="text/javascript">
+
+        $(document).ready(function(){
+            var ops = ['destination-out','destination-atop','destination-in','destination-atop','lighter','darker','copy','xor'];
+            var canvas = document.getElementById('canvas');
+            var ctx = canvas.getContext('2d');
+            //默认的叠加渲染方式
+            var img = new Image();
+            img.src = '../img/p1-img-gua.jpg';
+            img.onload = function(){
+                ctx.drawImage(img,0,0,270,160);//w、h是画布的宽和高
+                ctx.globalCompositeOperation = ops[0];
+            };
+
+            function drawPoint(x,y){
+                console.log(ctx.globalCompositeOperation);
+                ctx.beginPath();
+                ctx.arc(x, y, 30, 0, Math.PI * 2, true);
+                ctx.fill();
+            }
+            //在点击的地方画点
+            canvas.addEventListener('mousedown',function(e){
+                console.log(e.offsetX,e.offsetY);
+                drawPoint(e.offsetX,e.offsetY);
+            });
+            $("input[type='radio']").click(function(e){
+                ctx.globalCompositeOperation = ops[parseInt(this.id.replace('op',''))-1];
+            });
+        });
+    </script>
+</body>
+</html>
